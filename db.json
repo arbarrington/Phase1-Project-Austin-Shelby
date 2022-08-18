@@ -1,0 +1,16 @@
+{
+    "dog_walkers": [
+      {
+        "id": 1,
+        "dog_walker_name": "Austin",
+        "favorite_dogs": [],
+        "score": 0
+      },
+      {
+        "id": 2,
+        "dog_walker_name": "Shelby",
+        "favorite_dogs": [],
+        "score": 0
+      }
+    ]
+  }
