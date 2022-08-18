@@ -8,8 +8,11 @@
 
 // reset favorites
 
-fetch(`https://dog.ceo/api/breeds/image/randomages`)
+let testImg = document.getElementById('test-img')
+
+fetch(`https://dog.ceo/api/breeds/image/random`)
 .then(resp => resp.json())
 .then(dawgs => {
     console.log(dawgs)
+    testImg.src = dawgs.message
 })
