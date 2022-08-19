@@ -1,6 +1,11 @@
 let mainImg = document.getElementById('mainImage')
 
 let currentDawgBreed
+let currentDawgURL
+let previousDawgBreed
+
+let breedGuess
+let previousBreedGuess
 
 fetch(`https://dog.ceo/api/breeds/image/random`)
 .then(resp => resp.json())
@@ -22,3 +27,27 @@ function getDawgBreed(data) {
     console.log(currentDawgBreed)
     return(currentDawgBreed)
 }
+
+// GAME
+
+guessingForm(currentDawgBreed)
+
+// breed input for guess
+function guessingForm(currentDawgBreed){
+    console.log(currentDawgBreed)
+
+}
+
+// if guess is right or not
+
+// score updater
+
+// previous round data
+
+// FAVORITES
+
+// add fav breeds to dawg pack ~ link to photo
+
+// reset favs button
+
+
