@@ -18,8 +18,7 @@ let previousBreedGuess
 
 // initializes the displays to be empty
 scoreDisplay.textContent = `Your Score: ${currentScore}`
-previousGuess.textContent = `Your Last Guess: `
-previousAnswer.textContent = `The Correct Answer: `
+
 
 
 
@@ -63,8 +62,11 @@ function guessingForm(){
     }
 
     // calls function to build out past game history section
-    previousRoundData(breedGuess,currentDawgBreed)
+    //previousRoundData(breedGuess,currentDawgBreed)
+
+    nextRound()
     })
+
 }
 
 // previous round data
@@ -72,8 +74,8 @@ function previousRoundData(breedGuess,currentDawgBreed) {
     // logs the current as previous
     previousBreedGuess = breedGuess
     previousDawgBreed = currentDawgBreed
-    previousGuess.textContent = `Your Last Guess: ${previousBreedGuess}`
-    previousAnswer.textContent = `The Correct Answer: ${previousDawgBreed}`
+    previousGuess.textContent = previousBreedGuess
+    previousAnswer.textContent = previousDawgBreed
 }
 
 
@@ -82,8 +84,49 @@ function previousRoundData(breedGuess,currentDawgBreed) {
 
 // FAVORITES
 
-// add fav breeds to dawg pack ~ link to photo
+let heart = document.querySelector('.heart');
+//let mainImg = document.querySelector('#form');
+// form.append(heart);
+heart.addEventListener('click', (e) => {
+e.preventDefault();
+console.log('I was clicked');
+addToDogPack();
+})
 
-// reset favs button
+// instead of string interpolation for the link to dawg breed, should just pass in previous dawg url
+function addToDogPack(){
+    let newFavDogSlot = document.createElement('td');
+    let newFavDogBreed = document.createElement('a');
+    let favDogTable = document.querySelector('#favoritesTable')
+    newFavDogBreed.href = `https://dog.ceo/api/breed/${currentDawgBreed}/images/random`;
+    newFavDogBreed.textContent = currentDawgBreed;
+    newFavDogSlot.append(newFavDogBreed);
+    favDogTable.append(newFavDogSlot);
+    console.log(currentDawgBreed);
+}
+
+
+function nextRound() {
+    fetch(`https://dog.ceo/api/breeds/image/random`)
+    .then(resp => resp.json())
+    .then(data => {
+        mainImg.src = data.message
+        getDawgBreed(data)
+        guessingForm(currentDawgBreed)
+    })
+    previousRoundData(breedGuess,currentDawgBreed)
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 

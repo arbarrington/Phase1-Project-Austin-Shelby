@@ -1,71 +1,53 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dawgs</title>
     <link rel="stylesheet" href="./style.css">
-    <title id="1" class="a">title</title>   
+    <title id="1" class="a">title</title>
 </head>
-
 <body>
-    <div id="1" class="aa">
-        <h1>Can you guess what BREED this dog is?! (answers in lowercase only)</h1>
+    <div id="heading" class="aa">
+        <h1 class="a1">Can you guess what BREED this dog is?!</h1>
+        <h2 class="a2">(answers in lowercase only)</h2>
         <img id="mainImage" src="" alt="Woof! Something went wrong..."
-        width="width" height="height">
+        width="width" height="height" class="ai1">
+        <div class="wrapper">
+            <a class="heart" href="#"></a>
+        </div>
     </div>
-    <div id="2" class="bb">
-        <form id = 'guessInput'>
-            <input type="text" id = 'guessText' placeholder="your best guess">
+    <div class="bb">
+        <form id="guessInput">
+            <input type="text" id="guessText" placeholder="your best guess!">
             <input type="submit">
         </form>
     </div>
-    <div id="3" class="cc">
-        <table>
+    <div id="scorecard" class="cc">
+        <table width="50%">
             <tr>
                 <th id="scoreDisplay"></th>
-            <tr>
-                <th>Previous Round</th>
-             </tr>
             </tr>
             <tr>
-                <td></td>
+                <td>Your Response</td>
                 <td id="previousGuess"></td>
             </tr>
             <tr>
-                <td></td>
+                <td>Correct Response</td>
                 <td id="previousAnswer"></td>
             </tr>
         </table>
     </div>
-    <div id="4" class="cc"></div>  
-        <table>
+    <div id="favorites" class="cc"></div>
+        <table  width="50%">
             <tr>
                 <th>Favorite Dogs</th>
             </tr>
-            <tr>
-                <td>
-                    <img alt="favPic1">
-                </td>
-                <td>
-                    <img alt="favPic2">
-                </td>
-                <td>
-                    <img alt="favPic3">
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <img alt="favPic4">
-                </td>
+            <tr id="favoritesTable">
             </tr>
         </table>
     </div>
 </body>
-
 <script src="./index.js" defer></script>
-
 </html>
