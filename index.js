@@ -29,9 +29,11 @@ function getDawgBreed(data) {
 
     if (currentDawgBreed.includes('-')) {
         let indexOfDash = currentDawgBreed.indexOf('-')
+        currentDawgBreedWebsiteStyle = currentDawgBreedWebsiteStyle.replace('-','/')
         currentDawgBreed = `${currentDawgBreed.substring((indexOfDash+1))} ${currentDawgBreed.substring(0,indexOfDash)}` 
     }
     console.log(`getDawgBreed: ${currentDawgBreed}`) // cheater hack to see breed in the dev tools
+
 }
 
 // GAME
@@ -82,14 +84,24 @@ addToDogPack();
 function addToDogPack(){
     let newFavDogSlot = document.createElement('td');
     let newFavDogBreed = document.createElement('a');
-    newFavDogBreed.href = `https://images.dog.ceo/breeds/${currentDawgBreedWebsiteStyle}/images/random`;
+    fetchDawgPackPhoto(newFavDogBreed)
     newFavDogBreed.textContent = currentDawgBreed;
     newFavDogSlot.append(newFavDogBreed);
     favDogTable.append(newFavDogSlot);
 }
 
-
-
+// makes a fetch to the api to get a photo of a fav dawg (new dawg photo everytime!)
+// ISSUE: REQUIRES A FIRST CLICK BEFORE ACTIVATING!?
+function fetchDawgPackPhoto(newFavDogBreed) {
+        newFavDogBreed.addEventListener("click", e => {
+            e.preventDefault
+            fetch(`https://dog.ceo/api/breed/${currentDawgBreedWebsiteStyle}/images/random`)
+            .then(resp => resp.json())
+            .then(data => {
+                newFavDogBreed.href = data.message
+        })
+    })
+}
 
 
 
