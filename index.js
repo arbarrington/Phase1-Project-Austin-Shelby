@@ -89,23 +89,35 @@ function addToDogPack(){
     let newFavDogSlot = document.createElement('td');
     let newFavDogBreed = document.createElement('a');
     newFavDogBreed.setAttribute('id',`fav${whichFav}`)
+
+    dawgPackLinks(newFavDogBreed)
     fetchDawgPackPhoto(newFavDogBreed)
     newFavDogBreed.textContent = `??`
+    
     newFavDogSlot.append(newFavDogBreed);
     favDogTable.append(newFavDogSlot);
 }
 
-// makes a fetch to the api to get a photo of a fav dawg (new dawg photo everytime!)
-// ISSUE: REQUIRES A FIRST CLICK BEFORE ACTIVATING!?
-function fetchDawgPackPhoto(newFavDogBreed) {
-    newFavDogBreed.addEventListener("click", e => {
+// makes the links in the dawg pack table active without having to be clicked first
+function dawgPackLinks (newFavDogBreed) {
+    newFavDogBreed.addEventListener('click', e => {
         e.preventDefault
-        fetch(`https://dog.ceo/api/breed/${currentDawgBreedWebsiteStyle}/images/random`)
-        .then(resp => resp.json())
-        .then(data => {
+        fetchDawgPackPhoto(newFavDogBreed)
+    })
+}
+
+// gets fresh dog photos for the dawg pack
+function fetchDawgPackPhoto(newFavDogBreed) {
+    fetch(`https://dog.ceo/api/breed/${currentDawgBreedWebsiteStyle}/images/random`)
+            .then(resp => resp.json())
+            .then(data => {
             newFavDogBreed.href = data.message
         })
-    })
+}
+
+function noCheating() {
+    let previousFavDawgBreed = document.getElementById(`fav${whichFav-1}`)
+    previousFavDawgBreed.textContent = currentDawgBreed
 }
 
 // player status
@@ -120,11 +132,6 @@ let scoreFeedbackHeading = document.createElement('h2');
 scoreFeedbackHeading.textContent = scoreFeedbackArray[currentScore + 1];
 scoreFeedbackDiv.append(scoreFeedbackHeading);
 scoreDisplay.append(scoreFeedbackDiv);
-
-function noCheating() {
-    let previousFavDawgBreed = document.getElementById(`fav${whichFav-1}`)
-    previousFavDawgBreed.textContent = currentDawgBreed
-}
 
 function getUserInfo() {
     fetch('http://localhost:3000/dog_walkers')
