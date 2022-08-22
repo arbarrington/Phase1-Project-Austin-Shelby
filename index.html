@@ -24,11 +24,8 @@
             <input type="submit">
         </form>
     </div>
-    <div id="scorecard" class="cc">
+    <div class="cc" id="previousRoundDisplay">
         <table width="50%">
-            <tr>
-                <th id="scoreDisplay"></th>
-            </tr>
             <tr>
                 <td>Your Last Guess</td>
                 <td id="previousGuess"></td>
@@ -39,10 +36,23 @@
             </tr>
         </table>
     </div>
-    <div id="favorites" class="cc"></div>
+    <div id="userInfo" class="cc">
         <table  width="50%">
+        <tr>
+            <th>Your Name:</th>
+            <th>
+                <form id="yourName">
+                <input>
+                <button id="submitUserInfo"></button>
+                </form>
+            </th>
+        </tr>
+        <tr id="scorecard">
+            <th>Your Score:</th>
+            <td id="scoreDisplay"></th>
+        </tr>
             <tr>
-                <th>Favorite Dogs</th>
+                <th>Your Favorite Dogs</th>
             </tr>
             <tr id="favoritesTable">
             </tr>

@@ -64,9 +64,9 @@ table {
     margin-left: auto;
     margin-right: auto;
 }
-td {
+/* td {
     border: 5px solid black;
-}
+} */
 #previousResponse {
     color: red
 }
@@ -96,9 +96,9 @@ img {
 .link {
     text-decoration: underline;
 }
-td + img{
+/* td + img{
     border: 5px solid black;
-}
+} */
 .heart {
     color: red;
     background-color: currentColor;

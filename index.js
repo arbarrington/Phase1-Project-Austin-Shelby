@@ -2,6 +2,7 @@
 let mainImg = document.getElementById('mainImage')
 let guessForm = document.getElementById('guessInput')
 let scoreDisplay = document.getElementById('scoreDisplay')
+let previousRoundDisplay = document.getElementById('previousRoundDisplay')
 let previousGuess = document.getElementById('previousGuess')
 let previousAnswer = document.getElementById('previousAnswer')
 let favDogTable = document.querySelector('#favoritesTable')
@@ -54,8 +55,15 @@ function guessingForm(){
         scoreDisplay.textContent = `Your Score: ${currentScore}`
     }
 
+    // if the dog that was just guessed was added to favorites, it changes the ?? to the breed
+    if (hasBeenClicked == true) {
+        noCheating()
+    }
+
+    // shows the player's status
+    arrayDisplay.textContent = scoreFeedbackArray[currentScore]
+
     // fill in previous round info, loads the next round of the game
-    noCheating()
     previousRoundData()
     nextRound()
     })
@@ -78,10 +86,12 @@ function nextRound() {
 }
 
 // FAVORITES
+let hasBeenClicked = false;
 let heart = document.querySelector('.heart');
 heart.addEventListener('click', (e) => {
 e.preventDefault();
 addToDogPack();
+hasBeenClicked = true
 whichFav++
 })
 
@@ -102,7 +112,7 @@ function addToDogPack(){
 function dawgPackLinks (newFavDogBreed) {
     newFavDogBreed.addEventListener('click', e => {
         e.preventDefault
-        fetchDawgPackPhoto(newFavDogBreed)
+        fetchDawgPackPhoto(newFavDogBreed) // but then get fresh photos for each click after the first
     })
 }
 
@@ -118,45 +128,46 @@ function fetchDawgPackPhoto(newFavDogBreed) {
 function noCheating() {
     let previousFavDawgBreed = document.getElementById(`fav${whichFav-1}`)
     previousFavDawgBreed.textContent = currentDawgBreed
+    hasBeenClicked = false
 }
 
 // player status
+
+let arrayDisplay = document.createElement('div')
+previousRoundDisplay.append(arrayDisplay)
+
 let scoreFeedbackArray = ["Bad Dog!",
      "Apparently old dogs CAN learn new tricks!",
      "You're barking up the right tree!", 
      "Dog-gone-it! You're doing it!",
      "WOOF, there it is! WOOF, there it is!",
      "You have pleased the almighty doge."]
-let scoreFeedbackDiv = document.createElement('div');
-let scoreFeedbackHeading = document.createElement('h2');
-scoreFeedbackHeading.textContent = scoreFeedbackArray[currentScore + 1];
-scoreFeedbackDiv.append(scoreFeedbackHeading);
-scoreDisplay.append(scoreFeedbackDiv);
 
-function getUserInfo() {
-    fetch('http://localhost:3000/dog_walkers')
+let userInfoBtn = document.querySelector('#submitUserInfo');
+let userNameEntry = document.querySelector('input');
+function buildUserSubmitButton() {
+    return userNameEntry.addEventListener('submit', (e) =>
+    handleForm(e));
+}
+function handleForm(e){
+    e.preventDefault()
+    const userObject = {
+        name: e.target.name.value,
+        points: e.target.points.value,
+        favoriteDogs: []
+    }
+    console.log(userObject);
+    saveUserInfo('http://localhost:3000/books', userObject)
+    .catch(e => console.error(e))
+}
+function saveUserInfo (url, userObject) {
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userObject)
+    })
     .then((res) => res.json())
     .then((userObject) => console.log(userObject))
 }
-
-function saveUserInfo(userObject) {
-    fetch('http;:/localhost:3000/', {
-        method: 'POST',
-        headers: {
-            'Content-Type': `application/json`
-        },
-        body: JSON.stringify(userObject)
-    }).then((res) => res.json())
-    .then((userObject) => console.log(userObject))
-}
-
-//getUserInfo()
-
-
-
-
-
-
-// form to add in name
-// game updates their score and status
-// favorites updates their favorites
