@@ -7,17 +7,15 @@ let playerStatusDisplay = document.getElementById('playerStatus')
 let previousGuess = document.getElementById('previousGuess')
 let previousAnswer = document.getElementById('previousAnswer')
 let favDogTable = document.querySelector('#favoritesTable')
-let userInfoBtn = document.querySelector('#submitUserInfo');
-let userNameEntry = document.querySelector('input');
+let userNameBox = document.getElementById('userNameBox');
 let likeButton = document.getElementById('likeButtonID');
-
-console.log(likeButton)
-
+let userNameForm = document.getElementById('yourName')
 
 // initialize variables for the current dawg on the screen
 let currentDawgBreed
 let currentBreedGuess
 let currentDawgBreedWebsiteStyle
+let playerUserName;
 
 // initializes player's score
 let currentScore = 0;
@@ -30,6 +28,7 @@ let whichFav = 0;
 // initializes the website
 nextRound()
 guessingForm()
+getUserName()
 
 // this function takes in the data obj, selects the url, and then dissects it down to a dawg breed string in plain english
 function getDawgBreed(data) {
@@ -142,7 +141,7 @@ function noCheating() {
 }
 
 // Player Information!
-// player status
+// player status levels
 let scoreFeedbackArray = ["Bad Dog!",
      "Apparently old dogs CAN learn new tricks!",
      "You're barking up the right tree!", 
@@ -151,31 +150,39 @@ let scoreFeedbackArray = ["Bad Dog!",
      "You have pleased the almighty doge."]
 
 // input player name
-function buildUserSubmitButton() {
-    return userNameEntry.addEventListener('submit', (e) =>
-    handleForm(e));
-}
+// function buildUserSubmitButton() {
+//     return userNameEntry.addEventListener('submit', (e) =>
+//     handleForm(e));
+// }
 
-function handleForm(e){
-    e.preventDefault()
-    const userObject = {
-        name: e.target.name.value,
-        points: e.target.points.value,
-        favoriteDogs: []
-    }
-    console.log(userObject);
-    saveUserInfo('http://localhost:3000/books', userObject)
-    .catch(e => console.error(e))
-}
+// function handleForm(e){
+//     e.preventDefault()
+//     const userObject = {
+//         name: e.target.name.value,
+//         points: e.target.points.value,
+//         favoriteDogs: []
+//     }
+//     console.log(userObject);
+//     saveUserInfo('http://localhost:3000/books', userObject)
+//     .catch(e => console.error(e))
+// }
 
-function saveUserInfo (url, userObject) {
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userObject)
+// function saveUserInfo (url, userObject) {
+//     fetch(url, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(userObject)
+//     })
+//     .then((res) => res.json())
+//     .then((userObject) => console.log(userObject))
+// }
+
+function getUserName() {
+    userNameForm.addEventListener('submit', (e) => {
+        e.preventDefault()
+        playerUserName = e.target['userNameBox'].value
+        console.log(playerUserName)
     })
-    .then((res) => res.json())
-    .then((userObject) => console.log(userObject))
 }
