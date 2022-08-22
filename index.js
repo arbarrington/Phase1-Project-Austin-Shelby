@@ -3,6 +3,7 @@ let mainImg = document.getElementById('mainImage')
 let guessForm = document.getElementById('guessInput')
 let scoreDisplay = document.getElementById('scoreDisplay')
 let previousRoundDisplay = document.getElementById('previousRoundDisplay')
+let playerStatusDisplay = document.getElementById('playerStatus')
 let previousGuess = document.getElementById('previousGuess')
 let previousAnswer = document.getElementById('previousAnswer')
 let favDogTable = document.querySelector('#favoritesTable')
@@ -17,6 +18,7 @@ let currentDawgBreedWebsiteStyle
 let currentScore = 0;
 scoreDisplay.textContent = `Your Score: ${currentScore}`
 
+let favsArray = []
 let whichFav = 0;
 
 // initializes the website
@@ -61,7 +63,7 @@ function guessingForm(){
     }
 
     // shows the player's status
-    arrayDisplay.textContent = scoreFeedbackArray[currentScore]
+    playerStatusDisplay.textContent = scoreFeedbackArray[currentScore]
 
     // fill in previous round info, loads the next round of the game
     previousRoundData()
@@ -89,19 +91,23 @@ function nextRound() {
 let hasBeenClicked = false;
 let heart = document.querySelector('.heart');
 heart.addEventListener('click', (e) => {
-e.preventDefault();
-addToDogPack();
-hasBeenClicked = true
-whichFav++
+    e.preventDefault();
+    addToDogPack();
+    favsArray[whichFav] = currentDawgBreedWebsiteStyle
+    hasBeenClicked = true
+    whichFav++
+    console.log(favsArray)
 })
 
 function addToDogPack(){
+    let newFavDogBreedURL = currentDawgBreedWebsiteStyle
+
     let newFavDogSlot = document.createElement('td');
     let newFavDogBreed = document.createElement('a');
     newFavDogBreed.setAttribute('id',`fav${whichFav}`)
 
-    dawgPackLinks(newFavDogBreed)
-    fetchDawgPackPhoto(newFavDogBreed)
+    dawgPackLinks(newFavDogBreed,newFavDogBreedURL)
+    fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL)
     newFavDogBreed.textContent = `??`
     
     newFavDogSlot.append(newFavDogBreed);
@@ -109,16 +115,16 @@ function addToDogPack(){
 }
 
 // makes the links in the dawg pack table active without having to be clicked first
-function dawgPackLinks (newFavDogBreed) {
+function dawgPackLinks (newFavDogBreed,newFavDogBreedURL) {
     newFavDogBreed.addEventListener('click', e => {
         e.preventDefault
-        fetchDawgPackPhoto(newFavDogBreed) // but then get fresh photos for each click after the first
+        fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL) // but then get fresh photos for each click after the first
     })
 }
 
 // gets fresh dog photos for the dawg pack
-function fetchDawgPackPhoto(newFavDogBreed) {
-    fetch(`https://dog.ceo/api/breed/${currentDawgBreedWebsiteStyle}/images/random`)
+function fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL) {
+    fetch(`https://dog.ceo/api/breed/${newFavDogBreedURL}/images/random`)
             .then(resp => resp.json())
             .then(data => {
             newFavDogBreed.href = data.message
@@ -131,11 +137,8 @@ function noCheating() {
     hasBeenClicked = false
 }
 
+// Player Information!
 // player status
-
-let arrayDisplay = document.createElement('div')
-previousRoundDisplay.append(arrayDisplay)
-
 let scoreFeedbackArray = ["Bad Dog!",
      "Apparently old dogs CAN learn new tricks!",
      "You're barking up the right tree!", 
@@ -143,12 +146,15 @@ let scoreFeedbackArray = ["Bad Dog!",
      "WOOF, there it is! WOOF, there it is!",
      "You have pleased the almighty doge."]
 
+// input player name
 let userInfoBtn = document.querySelector('#submitUserInfo');
 let userNameEntry = document.querySelector('input');
+
 function buildUserSubmitButton() {
     return userNameEntry.addEventListener('submit', (e) =>
     handleForm(e));
 }
+
 function handleForm(e){
     e.preventDefault()
     const userObject = {
@@ -160,6 +166,7 @@ function handleForm(e){
     saveUserInfo('http://localhost:3000/books', userObject)
     .catch(e => console.error(e))
 }
+
 function saveUserInfo (url, userObject) {
     fetch(url, {
         method: 'POST',
