@@ -12,12 +12,12 @@
     <div id="heading" class="aa">
         <h1 class="a1">Can you guess what BREED this dog is?!</h1>
         <h2 class="a2">(answers in lowercase only)</h2>
-        <img id="mainImage" src="" alt="Woof! Something went wrong..."
-        width="width" height="height" class="ai1">
-        <div class="wrapper">
-            <a class="heart" href="#"></a>
+        <div id="gameImage" class="container">
+            <img id="mainImage" src="" alt="Woof! Something went wrong..."
+            width="width" height="height" class="ai1 container">
+            <button class="heart btn" href="#"></button>
         </div>
-    </div>
+     </div>
     <div class="bb">
         <form id="guessInput">
             <input type="text" id="guessText" placeholder="your best guess!">
@@ -30,11 +30,11 @@
                 <th id="scoreDisplay"></th>
             </tr>
             <tr>
-                <td>Your Response</td>
+                <td>Your Last Guess</td>
                 <td id="previousGuess"></td>
             </tr>
             <tr>
-                <td>Correct Response</td>
+                <td>The Correct Answer</td>
                 <td id="previousAnswer"></td>
             </tr>
         </table>

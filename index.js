@@ -16,6 +16,8 @@ let currentDawgBreedWebsiteStyle
 let currentScore = 0;
 scoreDisplay.textContent = `Your Score: ${currentScore}`
 
+let whichFav = 0;
+
 // initializes the website
 nextRound()
 guessingForm()
@@ -53,6 +55,7 @@ function guessingForm(){
     }
 
     // fill in previous round info, loads the next round of the game
+    noCheating()
     previousRoundData()
     nextRound()
     })
@@ -79,13 +82,15 @@ let heart = document.querySelector('.heart');
 heart.addEventListener('click', (e) => {
 e.preventDefault();
 addToDogPack();
+whichFav++
 })
 
 function addToDogPack(){
     let newFavDogSlot = document.createElement('td');
     let newFavDogBreed = document.createElement('a');
+    newFavDogBreed.setAttribute('id',`fav${whichFav}`)
     fetchDawgPackPhoto(newFavDogBreed)
-    newFavDogBreed.textContent = currentDawgBreed;
+    newFavDogBreed.textContent = `??`
     newFavDogSlot.append(newFavDogBreed);
     favDogTable.append(newFavDogSlot);
 }
@@ -93,23 +98,58 @@ function addToDogPack(){
 // makes a fetch to the api to get a photo of a fav dawg (new dawg photo everytime!)
 // ISSUE: REQUIRES A FIRST CLICK BEFORE ACTIVATING!?
 function fetchDawgPackPhoto(newFavDogBreed) {
-        newFavDogBreed.addEventListener("click", e => {
-            e.preventDefault
-            fetch(`https://dog.ceo/api/breed/${currentDawgBreedWebsiteStyle}/images/random`)
-            .then(resp => resp.json())
-            .then(data => {
-                newFavDogBreed.href = data.message
+    newFavDogBreed.addEventListener("click", e => {
+        e.preventDefault
+        fetch(`https://dog.ceo/api/breed/${currentDawgBreedWebsiteStyle}/images/random`)
+        .then(resp => resp.json())
+        .then(data => {
+            newFavDogBreed.href = data.message
         })
     })
 }
 
+// player status
+let scoreFeedbackArray = ["Bad Dog!",
+     "Apparently old dogs CAN learn new tricks!",
+     "You're barking up the right tree!", 
+     "Dog-gone-it! You're doing it!",
+     "WOOF, there it is! WOOF, there it is!",
+     "You have pleased the almighty doge."]
+let scoreFeedbackDiv = document.createElement('div');
+let scoreFeedbackHeading = document.createElement('h2');
+scoreFeedbackHeading.textContent = scoreFeedbackArray[currentScore + 1];
+scoreFeedbackDiv.append(scoreFeedbackHeading);
+scoreDisplay.append(scoreFeedbackDiv);
+
+function noCheating() {
+    let previousFavDawgBreed = document.getElementById(`fav${whichFav-1}`)
+    previousFavDawgBreed.textContent = currentDawgBreed
+}
+
+function getUserInfo() {
+    fetch('http://localhost:3000/dog_walkers')
+    .then((res) => res.json())
+    .then((userObject) => console.log(userObject))
+}
+
+function saveUserInfo(userObject) {
+    fetch('http;:/localhost:3000/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': `application/json`
+        },
+        body: JSON.stringify(userObject)
+    }).then((res) => res.json())
+    .then((userObject) => console.log(userObject))
+}
+
+//getUserInfo()
 
 
 
 
 
 
-
-
-
-
+// form to add in name
+// game updates their score and status
+// favorites updates their favorites
