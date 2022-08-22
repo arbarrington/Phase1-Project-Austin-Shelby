@@ -7,6 +7,11 @@ let playerStatusDisplay = document.getElementById('playerStatus')
 let previousGuess = document.getElementById('previousGuess')
 let previousAnswer = document.getElementById('previousAnswer')
 let favDogTable = document.querySelector('#favoritesTable')
+let userInfoBtn = document.querySelector('#submitUserInfo');
+let userNameEntry = document.querySelector('input');
+let likeButton = document.getElementById('likeButtonID');
+
+console.log(likeButton)
 
 
 // initialize variables for the current dawg on the screen
@@ -16,8 +21,9 @@ let currentDawgBreedWebsiteStyle
 
 // initializes player's score
 let currentScore = 0;
-scoreDisplay.textContent = `Your Score: ${currentScore}`
+scoreDisplay.textContent = currentScore
 
+// keep track of favorites, initializes to 0 and empty!
 let favsArray = []
 let whichFav = 0;
 
@@ -89,14 +95,12 @@ function nextRound() {
 
 // FAVORITES
 let hasBeenClicked = false;
-let heart = document.querySelector('.heart');
-heart.addEventListener('click', (e) => {
+likeButton.addEventListener('click', (e) => {
     e.preventDefault();
     addToDogPack();
     favsArray[whichFav] = currentDawgBreedWebsiteStyle
     hasBeenClicked = true
     whichFav++
-    console.log(favsArray)
 })
 
 function addToDogPack(){
@@ -147,9 +151,6 @@ let scoreFeedbackArray = ["Bad Dog!",
      "You have pleased the almighty doge."]
 
 // input player name
-let userInfoBtn = document.querySelector('#submitUserInfo');
-let userNameEntry = document.querySelector('input');
-
 function buildUserSubmitButton() {
     return userNameEntry.addEventListener('submit', (e) =>
     handleForm(e));

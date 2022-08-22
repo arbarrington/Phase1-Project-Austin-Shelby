@@ -15,23 +15,26 @@
         <div id="gameImage" class="container">
             <img id="mainImage" src="" alt="Woof! Something went wrong..."
             width="width" height="height" class="ai1 container">
-            <button class="heart btn" href="#"></button>
+            <!-- <button class="heart btn" href="#"></button> -->
         </div>
      </div>
     <div class="bb">
         <form id="guessInput">
             <input type="text" id="guessText" placeholder="your best guess!">
             <input type="submit">
+            <button id="likeButtonID">Add to Pack</button>
         </form>
+    
+        <!-- class="likeButton" href="#" -->
     </div>
     <div class="cc" id="previousRoundDisplay">
         <table width="50%">
             <tr>
-                <td>Your Last Guess</td>
+                <th>Your Last Guess:</th>
                 <td id="previousGuess"></td>
             </tr>
             <tr>
-                <td>The Correct Answer</td>
+                <th>The Correct Answer:</th>
                 <td id="previousAnswer"></td>
             </tr>
         </table>
@@ -39,7 +42,7 @@
     <div class="cc" id="arrayDisplay">
         <table width="50%">
             <tr>
-                <td>Your Status:</td>
+                <th>Your Status:</th>
                 <td id="playerStatus"></td>
             </tr>
         </table>
@@ -49,9 +52,9 @@
         <tr>
             <th>Your Name:</th>
             <th>
-                <form id="yourName">
-                <input>
-                <button id="submitUserInfo"></button>
+                <form id="yourName" class="form">
+                        <input type="text" id="submitUserInfo" placeholder="your Name!">
+                        <input type="submit">
                 </form>
             </th>
         </tr>
@@ -60,7 +63,7 @@
             <td id="scoreDisplay"></th>
         </tr>
             <tr>
-                <th>Your Favorite Dogs</th>
+                <th>Your Favorite Dogs:</th>
             </tr>
             <tr id="favoritesTable">
             </tr>

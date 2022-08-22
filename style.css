@@ -1,12 +1,13 @@
-/*<div id="1" class="a">div1</div>
+/* <div id="1" class="a">div1</div>
 <img id="mainImage" src="">
 <div id="2" class="b">div2</div>
 <div id="3" class="c">div3</div>
 <div id="4" class="d">div4</div>
 <div id="5" class="d">div5</div> */
-body {
-    background: linear-gradient(to top, rgb(77, 43, 25, 0.8), rgb(122, 77, 29, 0.9), rgb(176, 136, 25));
-    background-size: cover;
+ body {
+    /* background: linear-gradient(to top, rgb(77, 43, 25, 0.8), rgb(122, 77, 29, 0.9), rgb(176, 136, 25));
+    background-size: cover; */
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
     /* background-color:rosybrown; */
     /* background: url(); */
@@ -60,22 +61,21 @@ h1.hover {
     font-size: 12px;
 } */
 table {
-    border: 10px solid black;
+    border: 3px solid black;
     margin-left: auto;
     margin-right: auto;
 }
-/* td {
-    border: 5px solid black;
+/* .answerBox {
+    border: 1px solid black;
 } */
-#previousResponse {
+/* #previousResponse {
     color: red
-}
-#previousSolution {
+} */
+/* #previousSolution {
     color: green;
-}
+} */
 .a1 {
     font-size: 2em;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
 }
 #form {
@@ -83,9 +83,11 @@ table {
     margin-right: auto;
 }
 .a2 {
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     text-align: center;
 }
+/* .cc {
+    width: 50%
+} */
 img {
     display: block;
     margin-left: auto;
@@ -101,7 +103,7 @@ img {
 } */
 .heart {
     color: red;
-    background-color: currentColor;
+    /* background-color: currentColor; */
     display: inline-block;
     height: 50px;
     margin: 0 10px;
@@ -115,7 +117,7 @@ img {
   .heart::before,
   .heart::after {
     content: "";
-    background-color: currentColor;
+    /* background-color: currentColor; */
     border-radius: 50%;
     height: 50px;
     position: absolute;
@@ -130,15 +132,18 @@ img {
     top: 0;
   }
   /* Container needed to position the button. Adjust the width as needed */
-.container {
+/* .container {
     position: relative;
     width: 50%;
-  }
+  } */
   /* Make the image responsive */
-  .container img {
+   /* .container img {
     width: 100%;
     height: auto;
-  }
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }  */
   /* Style the button and place it in the middle of the container/image */
   .container .btn {
     position: absolute;
@@ -155,20 +160,17 @@ img {
   .container .btn:hover {
     background-color: black;
   }
-  .heart::before,
-  .heart::after {
-    content: "";
-    background-color: currentColor;
-    border-radius: 50%;
-    height: 50px;
-    position: absolute;
-    width: 50px;
-  }
-  .heart:before {
-    top: -25px;
-    left: 0;
-  }
-  .heart:after {
-    left: 25px;
-    top: 0;
-  }
+  .floatContainer {
+    border: 3px solid #fff;
+    padding: 20px;
+}
+.floatChild {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid red;
+}
+
+.bb {
+    text-align: center;
+}
