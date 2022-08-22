@@ -10,12 +10,16 @@ let favDogTable = document.querySelector('#favoritesTable')
 let userNameBox = document.getElementById('userNameBox');
 let likeButton = document.getElementById('likeButtonID');
 let userNameForm = document.getElementById('yourName')
+let nameCell = document.getElementById('nameCell');
 
 // initialize variables for the current dawg on the screen
 let currentDawgBreed
 let currentBreedGuess
 let currentDawgBreedWebsiteStyle
-let playerUserName;
+
+// initializes variables for the player's info
+let playerUserName
+let playerObject = {}
 
 // initializes player's score
 let currentScore = 0;
@@ -24,6 +28,15 @@ scoreDisplay.textContent = currentScore
 // keep track of favorites, initializes to 0 and empty!
 let favsArray = []
 let whichFav = 0;
+
+// player status levels
+let scoreFeedbackArray = 
+    ["Bad Dog!",
+     "Apparently old dogs CAN learn new tricks!",
+     "You're barking up the right tree!", 
+     "Dog-gone-it! You're doing it!",
+     "WOOF, there it is! WOOF, there it is!",
+     "You have pleased the almighty doge."]
 
 // initializes the website
 nextRound()
@@ -67,8 +80,11 @@ function guessingForm(){
         noCheating()
     }
 
-    // shows the player's status
+    // shows the player's status and logs it into the player object and logs players score too
     playerStatusDisplay.textContent = scoreFeedbackArray[currentScore]
+    playerObject.playerStatus = scoreFeedbackArray[currentScore]
+    playerObject.score = currentScore
+
 
     // fill in previous round info, loads the next round of the game
     previousRoundData()
@@ -98,14 +114,13 @@ likeButton.addEventListener('click', (e) => {
     e.preventDefault();
     addToDogPack();
     favsArray[whichFav] = currentDawgBreedWebsiteStyle
+    playerObject.favDawgs = favsArray
     hasBeenClicked = true
     whichFav++
 })
 
 function addToDogPack(){
     let newFavDogBreedURL = currentDawgBreedWebsiteStyle
-
-    let newFavDogSlot = document.createElement('td');
     let newFavDogBreed = document.createElement('a');
     newFavDogBreed.setAttribute('id',`fav${whichFav}`)
 
@@ -113,8 +128,7 @@ function addToDogPack(){
     fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL)
     newFavDogBreed.textContent = `??`
     
-    newFavDogSlot.append(newFavDogBreed);
-    favDogTable.append(newFavDogSlot);
+    favDogTable.append(newFavDogBreed);
 }
 
 // makes the links in the dawg pack table active without having to be clicked first
@@ -136,53 +150,31 @@ function fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL) {
 
 function noCheating() {
     let previousFavDawgBreed = document.getElementById(`fav${whichFav-1}`)
-    previousFavDawgBreed.textContent = currentDawgBreed
+    previousFavDawgBreed.textContent = `${currentDawgBreed} `
     hasBeenClicked = false
 }
 
 // Player Information!
-// player status levels
-let scoreFeedbackArray = ["Bad Dog!",
-     "Apparently old dogs CAN learn new tricks!",
-     "You're barking up the right tree!", 
-     "Dog-gone-it! You're doing it!",
-     "WOOF, there it is! WOOF, there it is!",
-     "You have pleased the almighty doge."]
-
-// input player name
-// function buildUserSubmitButton() {
-//     return userNameEntry.addEventListener('submit', (e) =>
-//     handleForm(e));
-// }
-
-// function handleForm(e){
-//     e.preventDefault()
-//     const userObject = {
-//         name: e.target.name.value,
-//         points: e.target.points.value,
-//         favoriteDogs: []
-//     }
-//     console.log(userObject);
-//     saveUserInfo('http://localhost:3000/books', userObject)
-//     .catch(e => console.error(e))
-// }
-
-// function saveUserInfo (url, userObject) {
-//     fetch(url, {
-//         method: 'POST',
-//         headers: {
-//             'Content-Type': 'application/json'
-//         },
-//         body: JSON.stringify(userObject)
-//     })
-//     .then((res) => res.json())
-//     .then((userObject) => console.log(userObject))
-// }
-
 function getUserName() {
     userNameForm.addEventListener('submit', (e) => {
         e.preventDefault()
         playerUserName = e.target['userNameBox'].value
-        console.log(playerUserName)
+        playerObject.name = playerUserName
+        nameCell.textContent = playerUserName;
     })
 }
+
+//console.log(playerObject)
+//get user name
+
+// once enter name, form goes away
+// just shows your name
+
+// store user name in player object
+
+
+// store score IPO
+
+// store favs in IPO
+
+// reset entire game -> refresh page

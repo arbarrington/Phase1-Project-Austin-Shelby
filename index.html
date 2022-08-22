@@ -12,6 +12,7 @@
     <div id="heading" class="aa">
         <h1 class="a1">Can you guess what BREED this dog is?!</h1>
         <h2 class="a2">(answers in lowercase only)</h2>
+        <div class="bb"><button  onClick="window.location.reload();">New Game</button></div>
         <div id="gameImage" class="container">
             <img id="mainImage" src="" alt="Woof! Something went wrong..."
             width="width" height="height" class="ai1 container">
@@ -49,12 +50,12 @@
         <table  width="50%">
         <tr>
             <th>Your Name:</th>
-            <th>
+            <td id="nameCell">
                 <form id="yourName">
                     <input type="text" id="userNameBox" placeholder="your Name!">
                     <input type="submit">
                 </form>
-            </th>
+            </td>
         </tr>
         <tr id="scorecard">
             <th>Your Score:</th>
@@ -62,8 +63,7 @@
         </tr>
             <tr>
                 <th>Your Favorite Dogs:</th>
-            </tr>
-            <tr id="favoritesTable">
+                <td id="favoritesTable"></td>
             </tr>
         </table>
     </div>
