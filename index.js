@@ -126,15 +126,17 @@ function nextRound() {
 
 // FAVORITES
 let hasBeenClicked = false;
-likeButton.addEventListener('click', (e) => {
-    e.preventDefault();
-    addToDogPack();
-    favsArray[whichFav] = currentDawgBreed
-    playerObject.favDawgs = favsArray
-    hasBeenClicked = true
-    whichFav++
-    if (playerNameSaved == true) {
-        patchCurrentPlayer(playerObject)
+    likeButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (hasBeenClicked == false) {
+            addToDogPack();
+            favsArray[whichFav] = currentDawgBreed
+            playerObject.favDawgs = favsArray
+            hasBeenClicked = true
+            whichFav++
+            if (playerNameSaved == true) {
+                patchCurrentPlayer(playerObject)
+            }
     }
 })
 

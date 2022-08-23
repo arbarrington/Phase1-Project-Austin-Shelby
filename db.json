@@ -17,6 +17,17 @@
       ],
       "score": 2,
       "playerStatus": ""
+    },
+    {
+      "name": "Larry",
+      "id": 3,
+      "playerStatus": "WOOF, there it is! WOOF, there it is!",
+      "score": 4,
+      "favDawgs": [
+        "english springer",
+        "pembroke",
+        "toy poodle"
+      ]
     }
   ]
 }
