@@ -11,6 +11,10 @@ let userNameBox = document.getElementById('userNameBox');
 let likeButton = document.getElementById('likeButtonID');
 let userNameForm = document.getElementById('yourName')
 let nameCell = document.getElementById('nameCell');
+let highScoreDisplayValue = document.getElementById('allTimeHighScoreValue')
+let highScoreDisplayPlayer = document.getElementById('allTimePlayer')
+let newTopDawg = document.getElementById('newHighScoreDisplay')
+let nameSubmitMessage = document.getElementById('nameSubmitMessage')
 
 // initialize variables for the current dawg on the screen
 let currentDawgBreed
@@ -19,9 +23,14 @@ let currentDawgBreedWebsiteStyle
 
 // initializes variables for the player's info
 let playerUserName
+let playerID
+let playerNameSaved = false
 let playerObject = {}
 
-// initializes player's score
+// initializes player's score and previous high score
+let numberPrevPlayers
+let prevHighScore = 0;
+let prevBestPlayer
 let currentScore = 0;
 scoreDisplay.textContent = currentScore
 
@@ -42,6 +51,7 @@ let scoreFeedbackArray =
 nextRound()
 guessingForm()
 getUserName()
+initialHighScoreDisplay()
 
 // this function takes in the data obj, selects the url, and then dissects it down to a dawg breed string in plain english
 function getDawgBreed(data) {
@@ -73,6 +83,9 @@ function guessingForm(){
     if (currentBreedGuess == currentDawgBreed) {
         currentScore ++
         scoreDisplay.textContent = `Your Score: ${currentScore}`
+        if (currentScore > prevHighScore) {
+            youBeatHighScore()
+        }
     }
 
     // if the dog that was just guessed was added to favorites, it changes the ?? to the breed
@@ -84,7 +97,10 @@ function guessingForm(){
     playerStatusDisplay.textContent = scoreFeedbackArray[currentScore]
     playerObject.playerStatus = scoreFeedbackArray[currentScore]
     playerObject.score = currentScore
-
+    
+    if (playerNameSaved == true) {
+        patchCurrentPlayer(playerObject)
+    }
 
     // fill in previous round info, loads the next round of the game
     previousRoundData()
@@ -113,10 +129,13 @@ let hasBeenClicked = false;
 likeButton.addEventListener('click', (e) => {
     e.preventDefault();
     addToDogPack();
-    favsArray[whichFav] = currentDawgBreedWebsiteStyle
+    favsArray[whichFav] = currentDawgBreed
     playerObject.favDawgs = favsArray
     hasBeenClicked = true
     whichFav++
+    if (playerNameSaved == true) {
+        patchCurrentPlayer(playerObject)
+    }
 })
 
 function addToDogPack(){
@@ -154,27 +173,55 @@ function noCheating() {
     hasBeenClicked = false
 }
 
-// Player Information!
 function getUserName() {
     userNameForm.addEventListener('submit', (e) => {
         e.preventDefault()
         playerUserName = e.target['userNameBox'].value
         playerObject.name = playerUserName
         nameCell.textContent = playerUserName;
+        nameSubmitMessage.textContent = 'Now Battling for Top Dawg:'
+        postPlayer(playerObject)
     })
 }
 
-//console.log(playerObject)
-//get user name
+// Display High Score
+function initialHighScoreDisplay() {
+    fetch('http://localhost:3000/players')
+    .then(resp => resp.json())
+    .then(scoreData => {
+        playerID = scoreData.length+1
+        scoreData.forEach(player => {
+            if (player.score > prevHighScore){
+                prevHighScore = player.score
+                prevBestPlayer = player.name
+            }
+        })
+        highScoreDisplayPlayer.textContent = `${prevBestPlayer} is top dawg with`
+        highScoreDisplayValue.textContent = `${prevHighScore} points!` 
+    })
+}
+function youBeatHighScore() {
+    highScoreDisplayPlayer.textContent = ''
+    highScoreDisplayValue.textContent = ''
+    newTopDawg.textContent = `Holy cow!  We have an new top dawg!  Congrats ${playerUserName} on your ${currentScore} points!`
+}
 
-// once enter name, form goes away
-// just shows your name
-
-// store user name in player object
 
 
-// store score IPO
+function postPlayer(playerObject) {
+    fetch('http://localhost:3000/players', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(playerObject)
+    })
+    //.then(playerID = numberPrevPlayers+1)
+    .then(playerNameSaved = true)
+}
 
-// store favs in IPO
-
-// reset entire game -> refresh page
+function patchCurrentPlayer(playerObject) {
+    fetch(`http://localhost:3000/players/${playerID}`, {
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(playerObject)
+    })
+}

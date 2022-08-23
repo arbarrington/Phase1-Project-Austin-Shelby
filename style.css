@@ -103,7 +103,7 @@ img {
 } */
 .heart {
     color: red;
-    /* background-color: currentColor; */
+    background-color: currentColor;
     display: inline-block;
     height: 50px;
     margin: 0 10px;
@@ -117,7 +117,7 @@ img {
   .heart::before,
   .heart::after {
     content: "";
-    /* background-color: currentColor; */
+    background-color: currentColor;
     border-radius: 50%;
     height: 50px;
     position: absolute;

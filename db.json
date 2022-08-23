@@ -1,10 +1,22 @@
 {
-    "dog_walkers": [
-      {
-        "id": 1,
-        "dog_walker_name": "Austin",
-        "favorite_dogs": [],
-        "score": 0
-      }
-    ]
-  }
+  "players": [
+    {
+      "id": 1,
+      "name": "ATDBG (All Time Dawg Breed Guesser)",
+      "favDawgs": [
+        "dhole"
+      ],
+      "score": 1,
+      "playerStatus": ""
+    },
+    {
+      "id": 2,
+      "name": "Bob",
+      "favDawgs": [
+        "dingo"
+      ],
+      "score": 2,
+      "playerStatus": ""
+    }
+  ]
+}
