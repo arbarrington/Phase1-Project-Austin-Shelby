@@ -10,17 +10,23 @@
 </head>
 <body id="theEntireBody">
     <div id="heading" class="aa">
-        <h1 class="a1">Can you guess what BREED this dog is?!</h1>
-        <h2 class="a2">(answers in lowercase only)</h2>
-        <div id="gameImage" class="container">
+        <h1 class="a1">Can you guess what BREED this dawg is?!</h1>
+        <div id="logIn">
+            <th>Enter Your Name to Battle for Top Dawg:</th>
+                <form id="logInForm">
+                    <input type="text" id="userNameBox" placeholder="your name">
+                    <input type="submit" value="Battle!">
+                </form>
+        </div>
+        <div id="gameImage" class="container" width="75%" height="25%">
             <img id="mainImage" src="" alt="Woof! Something went wrong..."
-            width="width" height="height" class="ai1 container">
+             class="ai1 container">
         </div>
      </div>
     <div class="bb">
         <form id="guessInput">
             <input type="text" id="guessText" placeholder="your best guess!">
-            <input type="submit">
+            <input type="submit" value="Guess">
             <button id="likeButtonID">Add to Pack</button>
         </form>
     </div>
@@ -49,10 +55,10 @@
         <tr>
             <th id="nameSubmitMessage">Enter Your Name to Battle for Top Dawg:</th>
             <td id="nameCell">
-                <form id="yourName">
-                    <input type="text" id="userNameBox" placeholder="your Name!">
+                <!-- <form id="yourName">
+                    <input type="text" id="userNameBox" placeholder="your name">
                     <input type="submit">
-                </form>
+                </form> -->
             </td>
         </tr>
         <tr id="scorecard">
@@ -68,14 +74,11 @@
     <div id="highScoreDisplay" class="cc">
         <table width="50%" id="highScoreTable">
             <th>All Time High Score:</th>
-            <td id="allTimePlayer"></td>
-            <td id="allTimeHighScoreValue"></td>
-            <td id="newHighScoreDisplay"></td>
+            <td id="allTimeHighScoreDisplay"></td>
         </table>
     </div>
     <div class="bb">
         <button id="refresh" onClick="window.location.reload();">New Game!</button>
-        <!-- <button id="save">Save Player Info</button> -->
      </div>
 </body>
 <script src="./index.js" defer></script>

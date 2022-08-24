@@ -15,14 +15,14 @@
       "favDawgs": [
         "dingo"
       ],
-      "score": 2,
+      "score": 1,
       "playerStatus": ""
     },
     {
       "name": "Larry",
       "id": 3,
       "playerStatus": "WOOF, there it is! WOOF, there it is!",
-      "score": 4,
+      "score": 1,
       "favDawgs": [
         "english springer",
         "pembroke",
@@ -30,42 +30,23 @@
       ]
     },
     {
-      "name": "Tazi",
+      "name": "Shelbsters",
       "id": 4,
+      "playerStatus": "You're barking up the right tree!",
+      "score": 2,
       "favDawgs": [
-        "malinois",
-        "great dane"
+        "german pointer"
+      ]
+    },
+    {
+      "name": "the queen",
+      "id": 5,
+      "favDawgs": [
+        "toy poodle",
+        "groenendael"
       ],
       "playerStatus": "Bad Dog!",
       "score": 0
-    },
-    {
-      "name": "bob",
-      "id": 5
-    },
-    {
-      "name": "dannny",
-      "id": 6
-    },
-    {
-      "name": "dannny",
-      "id": 7
-    },
-    {
-      "name": "Moolio",
-      "id": 8
-    },
-    {
-      "name": "Craig",
-      "id": 9
-    },
-    {
-      "name": "bob",
-      "id": 10
-    },
-    {
-      "name": "bob",
-      "id": 11
     }
   ]
 }

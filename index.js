@@ -1,29 +1,22 @@
-// html variables that can be grabbed in any function
-let mainImg = document.getElementById('mainImage')
+// html variables that are used more than once
+let entireBody = document.getElementById('theEntireBody')
+
+let logInDiv = document.getElementById('logIn')
+let nameCell = document.getElementById('nameCell');
+let userNameBox = document.getElementById('userNameBox');
+
 let guessForm = document.getElementById('guessInput')
 let scoreDisplay = document.getElementById('scoreDisplay')
-let previousRoundDisplay = document.getElementById('previousRoundDisplay')
-let playerStatusDisplay = document.getElementById('playerStatus')
-let previousGuess = document.getElementById('previousGuess')
-let previousAnswer = document.getElementById('previousAnswer')
-let favDogTable = document.querySelector('#favoritesTable')
-let userNameBox = document.getElementById('userNameBox');
-let likeButton = document.getElementById('likeButtonID');
-let userNameForm = document.getElementById('yourName')
-let nameCell = document.getElementById('nameCell');
-let highScoreDisplayValue = document.getElementById('allTimeHighScoreValue')
-let highScoreDisplayPlayer = document.getElementById('allTimePlayer')
-let newTopDawg = document.getElementById('newHighScoreDisplay')
-let nameSubmitMessage = document.getElementById('nameSubmitMessage')
-let entireBody = document.getElementById('theEntireBody')
-let formPopUp = document.getElementById('myForm')
+
+let highScoreBusiness = document.getElementById('allTimeHighScoreDisplay')
+
 
 // initialize variables for the current dawg on the screen
 let currentDawgBreed
 let currentBreedGuess
 let currentDawgBreedWebsiteStyle
 
-// initializes variables for the player's info
+// initializes variables for the player's name and object
 let playerUserName
 let playerID
 let playerNameSaved = false
@@ -34,7 +27,6 @@ let numberPrevPlayers
 let prevHighScore = 0;
 let prevBestPlayer
 let currentScore = 0;
-scoreDisplay.textContent = currentScore
 
 // keep track of favorites, initializes to 0 and empty!
 let favsArray = []
@@ -49,23 +41,37 @@ let scoreFeedbackArray =
      "WOOF, there it is! WOOF, there it is!",
      "You have pleased the almighty doge."]
 
-logIn();
+     
+// takes care of the "log in page" (not actually a seperate page)
 entireBody.style.visibility = 'hidden'
-
-function logIn() {
-    userNameForm.style.visibility = "visible";
-    userNameForm.addEventListener("submit", e => {
-        e.preventDefault
-        entireBody.style.visibility = "visible"
-        console.log('clicked')
-    })
-}
+logIn()
 
 // initializes the website after login
 nextRound()
 guessingForm()
-getUserName()
 initialHighScoreDisplay()
+scoreDisplay.textContent = currentScore
+
+// lets the player "log in" to start the game
+function logIn() {
+    logInDiv.style.visibility = 'visible'
+    document.getElementById('logInForm').addEventListener("submit", e => {
+        e.preventDefault()
+        playerUserName = e.target['userNameBox'].value
+        renderUserDiv()
+    })
+}
+
+// once the log in form is submitted, the rest of the page becomes visible, the log in section
+// goes away, the new player is posted to the json
+function renderUserDiv() {
+    entireBody.style.visibility = "visible"
+    nameCell.textContent = playerUserName;
+    playerObject.name = playerUserName
+    postPlayer(playerObject)
+    document.getElementById('nameSubmitMessage').textContent = 'Now Battling for Top Dawg:'
+    logInDiv.remove()
+}
 
 // this function takes in the data obj, selects the url, and then dissects it down to a dawg breed string in plain english
 function getDawgBreed(data) {
@@ -84,19 +90,18 @@ function getDawgBreed(data) {
 }
 
 // GAME
-
 // breed guessing funtion! runs the whole game part of the website
 function guessingForm(){
     // event listener for user input
     guessForm.addEventListener('submit', e => {
         e.preventDefault()
-        currentBreedGuess = e.target['guessText'].value
+        currentBreedGuess = e.target['guessText'].value.toLowerCase()
         guessForm.reset()
     
     // if the breed is right, the current score is incremented by 1 and displayed
     if (currentBreedGuess == currentDawgBreed) {
         currentScore ++
-        scoreDisplay.textContent = `Your Score: ${currentScore}`
+        scoreDisplay.textContent = currentScore
         if (currentScore > prevHighScore) {
             youBeatHighScore()
         }
@@ -108,7 +113,7 @@ function guessingForm(){
     }
 
     // shows the player's status and logs it into the player object and logs players score too
-    playerStatusDisplay.textContent = scoreFeedbackArray[currentScore]
+    document.getElementById('playerStatus').textContent = scoreFeedbackArray[currentScore]
     playerObject.playerStatus = scoreFeedbackArray[currentScore]
     playerObject.score = currentScore
     
@@ -124,23 +129,26 @@ function guessingForm(){
 
 // fills in page with info from the previous round data
 function previousRoundData() {
-    previousGuess.textContent = currentBreedGuess
-    previousAnswer.textContent = currentDawgBreed
+    document.getElementById('previousGuess').textContent = currentBreedGuess
+    document.getElementById('previousAnswer').textContent = currentDawgBreed
 }
 
 // peforms the fetch to the api to get the dog photo and breed
 function nextRound() {
+    likeButtonFunction()
     fetch(`https://dog.ceo/api/breeds/image/random`)
     .then(resp => resp.json())
     .then(data => {
-        mainImg.src = data.message
+        document.getElementById('mainImage').src = data.message
         getDawgBreed(data)
     })
 }
 
 // FAVORITES
+// event listenter on the add to pack button
 let hasBeenClicked = false;
-    likeButton.addEventListener('click', (e) => {
+function likeButtonFunction() {
+    document.getElementById('likeButtonID').addEventListener('click', (e) => {
         e.preventDefault();
         if (hasBeenClicked == false) {
             addToDogPack();
@@ -153,7 +161,9 @@ let hasBeenClicked = false;
             }
     }
 })
+}
 
+// adds the current dawg being presented to the current player's favorites
 function addToDogPack(){
     let newFavDogBreedURL = currentDawgBreedWebsiteStyle
     let newFavDogBreed = document.createElement('a');
@@ -163,7 +173,7 @@ function addToDogPack(){
     fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL)
     newFavDogBreed.textContent = `??`
     
-    favDogTable.append(newFavDogBreed);
+    document.querySelector('#favoritesTable').append(newFavDogBreed);
 }
 
 // makes the links in the dawg pack table active without having to be clicked first
@@ -183,23 +193,13 @@ function fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL) {
         })
 }
 
+// prevents the current breed from displaying in the favorites before a guess is submitted
 function noCheating() {
     let previousFavDawgBreed = document.getElementById(`fav${whichFav-1}`)
     previousFavDawgBreed.textContent = `${currentDawgBreed} `
     hasBeenClicked = false
 }
 
-function getUserName() {
-    userNameForm.addEventListener('submit', (e) => {
-        e.preventDefault()
-        playerUserName = e.target['userNameBox'].value
-        playerObject.name = playerUserName
-        nameCell.textContent = playerUserName;
-        nameSubmitMessage.textContent = 'Now Battling for Top Dawg:'
-        postPlayer(playerObject)
-        //showDivs()
-    })
-}
 
 // Display High Score
 function initialHighScoreDisplay() {
@@ -213,18 +213,16 @@ function initialHighScoreDisplay() {
                 prevBestPlayer = player.name
             }
         })
-        highScoreDisplayPlayer.textContent = `${prevBestPlayer} is top dawg with`
-        highScoreDisplayValue.textContent = `${prevHighScore} points!` 
+        highScoreBusiness.textContent = `${prevBestPlayer} is top dawg with ${prevHighScore} points!`
     })
 }
+
+// function is called once the current player beats the previous high score, updates the score on display every round
 function youBeatHighScore() {
-    highScoreDisplayPlayer.textContent = ''
-    highScoreDisplayValue.textContent = ''
-    newTopDawg.textContent = `Holy cow!  We have an new top dawg!  Congrats ${playerUserName} on your ${currentScore} points!`
+    highScoreBusiness.textContent = `Holy cow! We have an new top dawg!  Congrats ${playerUserName} on your ${currentScore} points!`
 }
 
-
-
+// creates a new player element in db.json for the current user
 function postPlayer(playerObject) {
     fetch('http://localhost:3000/players', {
         method: 'POST',
@@ -234,6 +232,7 @@ function postPlayer(playerObject) {
     .then(playerNameSaved = true)
 }
 
+// updates the users favorites, score, and status
 function patchCurrentPlayer(playerObject) {
     fetch(`http://localhost:3000/players/${playerID}`, {
         method: 'PATCH',
