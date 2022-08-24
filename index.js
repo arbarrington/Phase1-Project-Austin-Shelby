@@ -10,7 +10,6 @@ let scoreDisplay = document.getElementById('scoreDisplay')
 
 let highScoreBusiness = document.getElementById('allTimeHighScoreDisplay')
 
-
 // initialize variables for the current dawg on the screen
 let currentDawgBreed
 let currentBreedGuess
@@ -19,11 +18,9 @@ let currentDawgBreedWebsiteStyle
 // initializes variables for the player's name and object
 let playerUserName
 let playerID
-let playerNameSaved = false
 let playerObject = {}
 
 // initializes player's score and previous high score
-let numberPrevPlayers
 let prevHighScore = 0;
 let prevBestPlayer
 let currentScore = 0;
@@ -117,11 +114,8 @@ function guessingForm(){
     playerObject.playerStatus = scoreFeedbackArray[currentScore]
     playerObject.score = currentScore
     
-    if (playerNameSaved == true) {
-        patchCurrentPlayer(playerObject)
-    }
-
-    // fill in previous round info, loads the next round of the game
+    // fill in previous round info, updates json, loads the next round of the game
+    patchCurrentPlayer()
     previousRoundData()
     nextRound()
     })
@@ -156,11 +150,9 @@ function likeButtonFunction() {
             playerObject.favDawgs = favsArray
             hasBeenClicked = true
             whichFav++
-            if (playerNameSaved == true) {
-                patchCurrentPlayer(playerObject)
-            }
-    }
-})
+            patchCurrentPlayer()
+        }
+    })
 }
 
 // adds the current dawg being presented to the current player's favorites
@@ -196,7 +188,7 @@ function fetchDawgPackPhoto(newFavDogBreed,newFavDogBreedURL) {
 // prevents the current breed from displaying in the favorites before a guess is submitted
 function noCheating() {
     let previousFavDawgBreed = document.getElementById(`fav${whichFav-1}`)
-    previousFavDawgBreed.textContent = `${currentDawgBreed} `
+    previousFavDawgBreed.textContent = `  ${currentDawgBreed}  `
     hasBeenClicked = false
 }
 
@@ -229,7 +221,6 @@ function postPlayer(playerObject) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(playerObject)
     })
-    .then(playerNameSaved = true)
 }
 
 // updates the users favorites, score, and status
