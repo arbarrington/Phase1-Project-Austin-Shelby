@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="./style.css">
     <title id="1" class="a">title</title>
 </head>
-<body>
+<body id="theEntireBody">
     <div id="heading" class="aa">
         <h1 class="a1">Can you guess what BREED this dog is?!</h1>
         <h2 class="a2">(answers in lowercase only)</h2>
         <div id="gameImage" class="container">
             <img id="mainImage" src="" alt="Woof! Something went wrong..."
             width="width" height="height" class="ai1 container">
-            <!-- <button class="heart btn" href="#"></button> -->
         </div>
      </div>
     <div class="bb">
@@ -50,7 +49,7 @@
         <tr>
             <th id="nameSubmitMessage">Enter Your Name to Battle for Top Dawg:</th>
             <td id="nameCell">
-                <form id="yourName" onsubmit="return false">
+                <form id="yourName">
                     <input type="text" id="userNameBox" placeholder="your Name!">
                     <input type="submit">
                 </form>

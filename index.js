@@ -15,6 +15,8 @@ let highScoreDisplayValue = document.getElementById('allTimeHighScoreValue')
 let highScoreDisplayPlayer = document.getElementById('allTimePlayer')
 let newTopDawg = document.getElementById('newHighScoreDisplay')
 let nameSubmitMessage = document.getElementById('nameSubmitMessage')
+let entireBody = document.getElementById('theEntireBody')
+let formPopUp = document.getElementById('myForm')
 
 // initialize variables for the current dawg on the screen
 let currentDawgBreed
@@ -47,7 +49,19 @@ let scoreFeedbackArray =
      "WOOF, there it is! WOOF, there it is!",
      "You have pleased the almighty doge."]
 
-// initializes the website
+logIn();
+entireBody.style.visibility = 'hidden'
+
+function logIn() {
+    userNameForm.style.visibility = "visible";
+    userNameForm.addEventListener("submit", e => {
+        e.preventDefault
+        entireBody.style.visibility = "visible"
+        console.log('clicked')
+    })
+}
+
+// initializes the website after login
 nextRound()
 guessingForm()
 getUserName()
@@ -183,6 +197,7 @@ function getUserName() {
         nameCell.textContent = playerUserName;
         nameSubmitMessage.textContent = 'Now Battling for Top Dawg:'
         postPlayer(playerObject)
+        //showDivs()
     })
 }
 
@@ -216,7 +231,6 @@ function postPlayer(playerObject) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(playerObject)
     })
-    //.then(playerID = numberPrevPlayers+1)
     .then(playerNameSaved = true)
 }
 
@@ -227,3 +241,4 @@ function patchCurrentPlayer(playerObject) {
         body: JSON.stringify(playerObject)
     })
 }
+

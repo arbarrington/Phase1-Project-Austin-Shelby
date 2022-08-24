@@ -28,6 +28,44 @@
         "pembroke",
         "toy poodle"
       ]
+    },
+    {
+      "name": "Tazi",
+      "id": 4,
+      "favDawgs": [
+        "malinois",
+        "great dane"
+      ],
+      "playerStatus": "Bad Dog!",
+      "score": 0
+    },
+    {
+      "name": "bob",
+      "id": 5
+    },
+    {
+      "name": "dannny",
+      "id": 6
+    },
+    {
+      "name": "dannny",
+      "id": 7
+    },
+    {
+      "name": "Moolio",
+      "id": 8
+    },
+    {
+      "name": "Craig",
+      "id": 9
+    },
+    {
+      "name": "bob",
+      "id": 10
+    },
+    {
+      "name": "bob",
+      "id": 11
     }
   ]
 }
